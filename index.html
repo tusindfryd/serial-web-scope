@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+
+    <title>Serial Web Scope</title>
+    <meta name="description" content=" " />
+    <link rel="stylesheet" href="styles.css" />
+    <link href="" rel="icon" type="image/x-icon" />
+  </head>
+
+  <body class="dark-theme">
+    <nav>
+      <div>
+        <input type="number" id="baudRate" name="baudRate" value="115200" />
+        <label for="baudRate">Baud rate:</label>
+      </div>
+      <div>
+        <input type="number" id="windowWidth" name="windowWidth" value="200" />
+        <label for="windowWidth">Data window width:</label>
+      </div>
+      <div>
+        <fieldset>
+          <legend>Line endings:</legend>
+          <div>
+            <input type="radio" id="rn" name="lineEndings" value="rn" checked />
+            <label for="rn">\r\n</label>
+          </div>
+          <div>
+            <input type="radio" id="n" name="lineEndings" value="n" />
+            <label for="n">\n</label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Data format:</legend>
+          <div>
+            <input
+              type="radio"
+              id="json"
+              name="dataFormat"
+              value="json"
+              checked
+            />
+            <label for="json">JSON</label>
+          </div>
+          <div>
+            <input type="radio" id="csv" name="dataFormat" value="csv" />
+            <label for="csv">Comma Separated Values</label>
+          </div>
+        </fieldset>
+      </div>
+
+      <button
+        id="connect"
+        onclick="typeof connectDevice === 'function' ? connectDevice() : null"
+      >
+        Connect through serial port
+      </button>
+    </nav>
+    <div>
+      <canvas width="1400" height="700" id="scope"></canvas>
+      <div id="output"></div>
+    </div>
+  </body>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.1.1"></script>
+  <script src="main.js"></script>
+</html>

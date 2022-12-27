@@ -1,0 +1,80 @@
+:root {
+  --light-bg-color: #fff;
+  --light-text-color: #222;
+  --dark-bg-color: #222;
+  --dark-text-color: #fff;
+  --bg-color: var(--dark-bg-color);
+  --text-color: var(var(--text-color));
+}
+
+body.light-theme {
+  background-color: var(--light-bg-color);
+  color: var(--light-text-color);
+}
+
+body.dark-theme {
+  background-color: var(--dark-bg-color);
+  color: var(--dark-text-color);
+}
+
+body {
+  background-color: var(--dark-bg-color);
+  color: var(--dark-text-color);
+  flex-direction: row-reverse;
+  gap: 16px;
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: monospace;
+}
+
+input, button {
+  font-family: monospace;
+}
+
+input {
+  background: transparent;
+  color: inherit;
+  outline: none;
+  border: 1px solid white;
+  border-radius: 4px;
+  padding: 4px;
+}
+
+fieldset {
+  border-radius: 4px;
+}
+
+button:disabled, input:disabled, input:disabled + label, fieldset:has(input:disabled) {
+  opacity: 0.5;
+}
+
+fieldset:has(input:disabled) input, fieldset:has(input:disabled) input + label {
+  opacity: 1;
+}
+
+button {
+  appearance: none;
+  border: 1px solid white;
+  background: none;
+  color: inherit;
+  padding: 8px;
+  border-radius: 4px;
+  margin: 0;
+}
+
+nav {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+nav div {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  gap: 16px;
+}
