@@ -14,22 +14,22 @@
     <nav>
       <div>
         <input type="number" id="baudRate" name="baudRate" value="115200" />
-        <label for="baudRate">Baud rate:</label>
+        <label for="baudRate" title="Specify the baud rate">Baud rate:</label>
       </div>
       <div>
         <input type="number" id="windowWidth" name="windowWidth" value="200" />
-        <label for="windowWidth">Data window width:</label>
+        <label for="windowWidth" title="Number of displayed data points">Data window width:</label>
       </div>
       <div>
         <fieldset>
           <legend>Line endings:</legend>
           <div>
             <input type="radio" id="rn" name="lineEndings" value="rn" checked />
-            <label for="rn">\r\n</label>
+            <label for="rn" title="CRLF end of line sequence">\r\n</label>
           </div>
           <div>
             <input type="radio" id="n" name="lineEndings" value="n" />
-            <label for="n">\n</label>
+            <label for="n" title="LF end of line sequence">\n</label>
           </div>
         </fieldset>
 
@@ -43,11 +43,17 @@
               value="json"
               checked
             />
-            <label for="json">JSON</label>
+            <label
+              for="json"
+              title='e.g. { "Channel 1": 0.1, "Channel 2": 0.2 }'
+              >JSON</label
+            >
           </div>
           <div>
             <input type="radio" id="csv" name="dataFormat" value="csv" />
-            <label for="csv">Comma Separated Values</label>
+            <label for="csv" title="e.g. 0.1, 0.2"
+              >Comma Separated Values</label
+            >
           </div>
         </fieldset>
       </div>
@@ -59,8 +65,11 @@
         Connect through serial port
       </button>
     </nav>
-    <div>
-      <canvas width="1400" height="700" id="scope"></canvas>
+    <div id="wrapper">
+      <div id="overlay">
+        <img src="usb.svg" />
+      </div>
+      <canvas id="scope"></canvas>
       <div id="output"></div>
     </div>
   </body>

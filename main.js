@@ -30,7 +30,7 @@ class LineBreakTransformer {
   }
 }
 
-let connect = async () => {
+const connect = async () => {
   const port = await navigator.serial.requestPort();
   await port.open({
     baudRate: Number(document.querySelector("#baudRate").value),
@@ -44,21 +44,25 @@ let connect = async () => {
   reader = inputStream.getReader();
 };
 
-let connectDevice = async () => {
+const connectDevice = async () => {
   await connect();
-  document.querySelector("#baudRate").disabled = true;
-  document.querySelector("#connect").disabled = true;
-  [...document.querySelectorAll('input[name="lineEndings"]')].map(
-    (el) => (el.disabled = true)
+  const disabled = [
+    "#baudRate",
+    "#connect",
+    'input[name="lineEndings"]',
+    'input[name="dataFormat"]',
+  ];
+
+  disabled.map((query) =>
+    [...document.querySelectorAll(query)].map((el) => (el.disabled = true))
   );
-  [...document.querySelectorAll('input[name="dataFormat"]')].map(
-    (el) => (el.disabled = true)
-  );
+
+  document.querySelector("#overlay").remove();
 
   while (true) {
     const { value, done } = await reader.read();
     if (value) {
-      document.querySelector('#output').innerText = value;
+      document.querySelector("#output").innerText = value;
       const format = document.querySelector(
         'input[name="dataFormat"]:checked'
       ).value;
@@ -70,6 +74,7 @@ let connectDevice = async () => {
             addData(scope, date, key, Number(reading[key]));
           }
         } catch (error) {
+          document.querySelector("#output").innerText = error;
           console.log(error);
         }
       } else if (format === "csv") {
@@ -79,9 +84,9 @@ let connectDevice = async () => {
         } else {
           let values = value.split(",");
           let date = new Date().toLocaleString("en-US");
-          for (let v in values) {
-            addData(scope, date, `Channel ${v}`, Number(values[v]));
-          }
+          values.forEach((v, index) =>
+            addData(scope, date, `Channel ${index + 1}`, Number(v))
+          );
         }
       }
     }
@@ -100,12 +105,12 @@ let addData = (chart, label, datasetLabel, data) => {
   let datasets = chart.data.datasets.filter(
     (dataset) => dataset.label == datasetLabel
   );
-  datasets.length == 0
-    ? chart.data.datasets.push({ label: datasetLabel, data: [] })
-    : null;
-  datasets = chart.data.datasets.filter(
-    (dataset) => dataset.label == datasetLabel
-  );
+  if (datasets.length == 0) {
+    chart.data.datasets.push({ label: datasetLabel, data: [] });
+    datasets = chart.data.datasets.filter(
+      (dataset) => dataset.label == datasetLabel
+    );
+  }
   datasets[0].data.push(data);
   datasets[0].data = datasets[0].data.slice(-windowWidth);
   chart.update("quiet");
