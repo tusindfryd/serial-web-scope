@@ -61,7 +61,7 @@ const connectDevice = async () => {
 
   while (true) {
     const { value, done } = await reader.read();
-    if (value) {
+    if (value && !isNaN(value)) {
       document.querySelector("#output").innerText = value;
       const format = document.querySelector(
         'input[name="dataFormat"]:checked'
